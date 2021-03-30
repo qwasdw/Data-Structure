@@ -85,25 +85,25 @@ public:
 		if ((*node)->left != nullptr) {
 			st.push(node);
 			while ((*node)->left != nullptr) {
-				Node* predsor = (*node)->left;
-				while (predsor->right != nullptr) {
-					st.push(&predsor);
-					predsor = predsor->right;
+				Node* predecessor = (*node)->left;
+				while (predecessor->right != nullptr) {
+					st.push(&predecessor);
+					predecessor = predecessor->right;
 				}
-				(*node)->value = predsor->value;
-				node = &predsor;
+				(*node)->value = predecessor->value;
+				node = &predecessor;
 			}
 		}
 		else if ((*node)->right != nullptr) {
 			st.push(node);
 			while ((*node)->right != nullptr) {
-				Node* sucsor = (*node)->right;
-				while (sucsor->left != nullptr) {
-					st.push(&sucsor);
-					sucsor = sucsor->left;
+				Node* successor = (*node)->right;
+				while (successor->left != nullptr) {
+					st.push(&successor);
+					successor = successor->left;
 				}
-				(*node)->value = sucsor->value;
-				node = &sucsor;
+				(*node)->value = successor->value;
+				node = &successor;
 			}
 		}
 		if (st.empty()) {
