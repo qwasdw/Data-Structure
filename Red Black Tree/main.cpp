@@ -65,11 +65,19 @@ public:
 			cout << "Not exist a node which value equals to " << value << "." << endl;
 			return;
 		}
-		while (node->left != nullptr || node->right != nullptr) {		// Find deleted node's successor and switch the value
+		while (node->left != nullptr) {									// Find deleted node's predecessor and switch the value
+			Node* predsor = predecessor(node);							// Let predecessor node become the deleted node
+			node->value = predsor->value;								// Until node is a leaf node
+			node = predsor;
+		}
+
+		while (node->right != nullptr) {								// Find deleted node's successor and switch the value
 			Node* sucsor = successor(node);								// Let successor node become the deleted node
 			node->value = sucsor->value;								// Until node is a leaf node
 			node = sucsor;
 		}
+
+
 		Node* parent = node->parent;
 		if (node != root) {												// Deleted node is not root
 			if (node->color == 1) {										// Deleted node's color is black
@@ -114,7 +122,6 @@ public:
 		q.push(root);
 		while (!q.empty()) {
 			queue<Node*> temp;
-			int count = 0;
 			while (!q.empty()) {
 				Node* node = q.front();
 				q.pop();
@@ -122,16 +129,12 @@ public:
 					cout << " null ";
 					continue;
 				}
-				++count;
 				cout << node->value << "-" << node->color << "  ";
 				temp.push(node->left);
 				temp.push(node->right);
 			}
 			q = temp;
 			cout << endl;
-			if (count == 0) {
-				break;
-			}
 		}
 		cout << "Print done!" << endl;
 		cout << endl;
@@ -369,6 +372,7 @@ int main() {
 		RBT.insertion(num);
 		RBT.print();
 	}
+	cout << "-----------------" << endl;
 	for (int num : a) {
 		RBT.deletion(num);
 		RBT.print();
